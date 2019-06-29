@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock Paper Scissors - Javascript Game</title>
+    </head>
+    <body>
+        <script>
+            // Get a random number between 0-2
+
+            function getRandomInt(min, max){
+                min = Math.ceil(min);
+                max = Math.floor(max);
+
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function computerPlay(){
+                let choices = ["rock", "paper", "scissors"];
+                let computerChoice = choices[getRandomInt(0, 2)];
+                return computerChoice;
+            }
+
+            function playRound(playerSelection, computerSelection){
+                playerSelection = playerSelection.toLowerCase();
+
+                if (playerSelection === computerSelection){
+                    return "It's a tie!";
+                } else if ( playerSelection === "rock" && computerSelection === "paper" || 
+                            playerSelection === "paper" && computerSelection === "rock" ||
+                            playerSelection === "scissors" && computerSelection === "paper"){
+                    return "Congrats, you won!";
+                } else {
+                    return "Sorry, man, you lose! The computer is smarter than you.";
+                }
+            }
+
+            function game(){
+                let playerScore = 0;
+                let computerScore = 0;
+                let allowedAnswers = ["rock", "paper", "scissors"];
+
+                for (let i = 0; i < 5; i++){
+                    let playerSelection = prompt("Please choose: Rock, Paper, or Scissors");
+                    playerSelection = playerSelection.toLowerCase();
+
+                    while(!allowedAnswers.includes(playerSelection)){
+                        playerSelection = prompt("Dude, only use rock, paper, or scissors, please!");
+                        playerSelection.toLowerCase();
+                    }
+
+                    computerSelection = computerPlay();
+                    let result = playRound(playerSelection, computerSelection);
+
+                    console.log("---");
+                    console.log("Round " + (i + 1) + ": You chose " + playerSelection + ", the computer chose " + computerSelection + ".");
+                    console.log(result);
+
+                    if (result === "Congrats, you won!"){
+                        playerScore++;
+                    } else if (result === "Sorry, man, you lose! The computer is smarter than you."){
+                        computerScore++;
+                    } 
+                }
+
+                console.log("You won " + playerScore + " game/s. The computer won " + computerScore + " game/s.");
+                if (playerScore > computerScore){
+                    console.log("Yeah, you won altogether!");
+                } else if (playerScore < computerScore){
+                    console.log(":(... the computer won altogether!");
+                } else {
+                    console.log("Man, all in all, it's a tie");
+                }
+            }
+        </script>
+    </body>
+</html>
